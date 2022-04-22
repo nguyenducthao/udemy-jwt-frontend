@@ -47,3 +47,7 @@ hoặc sử dụng hook useHistory() của react-router-dom:
         Create new account
     </button>
 
+npm install --save-exact axios@0.25.0
+
+sử dụng website https://reqres.in/ để giả lập API
+
