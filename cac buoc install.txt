@@ -29,3 +29,21 @@ npm install --save-exact bootstrap@5.1.3
 
 import bootstrap vào file index.js để sử dụng bootstrap cả project:
     import 'bootstrap/dist/css/bootstrap.min.css'
+
+Form register: để chuyển trang có thể sử dụng thẻ Link của react-router-dom:
+    <Link to='/register'>
+        <button className='btn btn-success'>
+            Create new account
+        </button>
+    </Link>
+hoặc sử dụng hook useHistory() của react-router-dom:
+    import { useHistory } from 'react-router-dom'
+    let history = useHistory()
+    const handleCreateNewAccount = () => {
+        history.push('/register')
+    }
+    <button className='btn btn-success'
+        onClick={() => handleCreateNewAccount()}>
+        Create new account
+    </button>
+
