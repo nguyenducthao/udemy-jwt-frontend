@@ -8,3 +8,24 @@ copy nội dung file src/App.css vào file src/App.scss
 xóa file App.css
 
 stop project và chạy lại project (npm start) để project sử dụng được scss
+
+tạo thư mục src/components
+
+tạo thư mục src/components/Login
+
+tạo thư mục src/components/Navigation
+
+tạo file Nav.js trong thư mục src/components/Navigation
+
+tạo file Nav.scss trong thư mục src/components/Navigation
+
+xóa file index.css
+
+xóa dòng import './index.css'; trong file index.js
+
+npm install --save-exact react-router-dom@5.3.0
+
+npm install --save-exact bootstrap@5.1.3
+
+import bootstrap vào file index.js để sử dụng bootstrap cả project:
+    import 'bootstrap/dist/css/bootstrap.min.css'
