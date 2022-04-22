@@ -1,0 +1,10 @@
+cài sass:
+    npm install --save-exact sass@1.48.0
+
+tạo file src/App.scss
+
+copy nội dung file src/App.css vào file src/App.scss
+
+xóa file App.css
+
+stop project và chạy lại project (npm start) để project sử dụng được scss
