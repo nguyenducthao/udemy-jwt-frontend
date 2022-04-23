@@ -50,4 +50,32 @@ hoặc sử dụng hook useHistory() của react-router-dom:
 npm install --save-exact axios@0.25.0
 
 sử dụng website https://reqres.in/ để giả lập API
+    import { useEffect } from 'react'
+    useEffect(() => {
+        axios.get("https://reqres.in/api/users?page=2").then(data => {
+            console.log('>>> check data axios: ', data)
+        })
+    }, [])
 
+Tạo API trên 01_jwtBackend để test axios từ 02_jwtFrontend:
+    mở file web.js trong project 01_jwtBackend thêm vào dòng sau:
+        import apiController from "../controllers/apiController";
+        router.get("/api/test-api",apiController.testApi)
+    tạo file src/controller/apiController.js trong project 01_jwtBackend với nội dung sau:
+        const testApi = (req, res) => {
+                return res.status(200).json({
+                    message: 'ok',
+                    data: 'test api'
+                })
+            }
+        module.exports = {
+            testApi
+        }
+    mở trên trình duyệt địa chỉ http://localhost:8080/api/test-api, nếu thành công thì sẽ nhận được dữ liệu như sau:
+        {"message":"ok","data":"test api"}
+
+Mở file Register.js trong project 02_jwtFrontend:
+    sửa: https://reqres.in/api/users?page=2
+    thành: http://localhost:8080/api/test-api
+
+mở trên trình duyệt địa chỉ http://localhost:3000/register thì sẽ bị lỗi CORS
