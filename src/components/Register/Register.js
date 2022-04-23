@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import './Register.scss'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 const Register = (props) => {
     const [email, setEmail] = useState("")
@@ -14,7 +15,39 @@ const Register = (props) => {
     const handleLogin = () => {
         history.push('/login')
     }
+    const isValidInput = () => {
+        if (!email) {
+            toast.error("Email is required!");
+            return false;
+        }
+        if (!phone) {
+            toast.error("Phone is required!");
+            return false;
+        }
+        if (!username) {
+            toast.error("Username is required!");
+            return false;
+        }
+        if (!password) {
+            toast.error("Password is required!");
+            return false;
+        }
+        if (!confirmPassword) {
+            toast.error("Re-enter password is required!");
+            return false;
+        }
+        if (password !== confirmPassword) {
+            toast.error("Password and Re-enter password must be the same!");
+            return false;
+        }
+        let regx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        if (!regx.test(email)) {
+            toast.error("Please enter a valid email address!");
+            return false;
+        }
+    }
     const handleRegister = () => {
+        let check = isValidInput()
         let userData = {
             email, phone, username, password
         }
@@ -71,7 +104,7 @@ const Register = (props) => {
                                 value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)}
                             />
                         </div>
-                        <button className='btn btn-primary'
+                        <button className='btn btn-primary' type='button'
                             onClick={() => handleRegister()}
                         >Register</button>
                         <hr />
