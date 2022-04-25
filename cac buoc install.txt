@@ -106,3 +106,5 @@ cách fix lỗi CORS cho project 01_jwtBackend:
     mở trên trình duyệt địa chỉ http://localhost:3000/register để xem kết quả đã fix được lỗi CORS chưa (xem trong console sẽ mất lỗi CORS)
 
     npm install --save-exact react-toastify@8.1.0
+
+    npm install --save-exact lodash@4.17.21
