@@ -64,10 +64,10 @@ const Register = (props) => {
         }
         return true;
     }
-    const handleRegister = () => {
+    const handleRegister = async () => {
         let check = isValidInput()
         if (check) {
-            axios.post("http://localhost:8080/api/v1/register", {
+            let response = await axios.post("http://localhost:8080/api/v1/register", {
                 email, phone, username, password
             })
         }
