@@ -1,10 +1,38 @@
 import { useHistory } from 'react-router-dom'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Login.scss'
-const Login = () => {
+import { toast } from 'react-toastify'
+import { loginUser } from '../../services/userService'
+
+const Login = (props) => {
     let history = useHistory()
+    const [valueLogin, setValueLogin] = useState("")
+    const [password, setPassword] = useState("")
+    // const [email, setEmail] = useState("")
+    // const [phone, setPhone] = useState("")
+    // const [username, setUserName] = useState("")
+    const defaultValidInput = {
+        isValidValueLogin: true,
+        isValidPassword: true,
+    }
+    const [objCheckInput, setObjCheckInput] = useState(defaultValidInput)
     const handleCreateNewAccount = () => {
         history.push('/register')
+    }
+    const handleLogin = async () => {
+        setObjCheckInput(defaultValidInput)
+        if (!valueLogin) {
+            setObjCheckInput({ ...defaultValidInput, isValidValueLogin: false })
+            toast.error('Please enter your email address or phone number')
+            return
+        }
+        if (!password) {
+            setObjCheckInput({ ...defaultValidInput, isValidPassword: false })
+            toast.error('Please enter your password')
+            return
+        }
+        await loginUser(valueLogin, password)
     }
     return (
         <div className="login-container">
@@ -22,9 +50,21 @@ const Login = () => {
                         <div className='brand d-sm-none'>
                             PC3-INVEST
                         </div>
-                        <input type='text' className='form-control' placeholder='Email address or phone number' />
-                        <input type='password' className='form-control' placeholder='Password' />
-                        <button className='btn btn-primary'>Login</button>
+                        <input
+                            type='text'
+                            className={objCheckInput.isValidValueLogin ? 'form-control' : 'form-control is-invalid'}
+                            placeholder='Email address or phone number'
+                            value={valueLogin}
+                            onChange={(event) => setValueLogin(event.target.value)}
+                        />
+                        <input
+                            type='password'
+                            className={objCheckInput.isValidPassword ? 'form-control' : 'form-control is-invalid'}
+                            placeholder='Password'
+                            value={password}
+                            onChange={(event) => setPassword(event.target.value)}
+                        />
+                        <button className='btn btn-primary' onClick={() => handleLogin()}>Login</button>
                         <span className='text-center'>
                             <a className='forgot-password' href='#'>
                                 Forgot your password?
