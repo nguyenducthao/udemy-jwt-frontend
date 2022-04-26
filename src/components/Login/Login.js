@@ -4,14 +4,12 @@ import { Link } from 'react-router-dom'
 import './Login.scss'
 import { toast } from 'react-toastify'
 import { loginUser } from '../../services/userService'
+import { useEffect } from "react"
 
 const Login = (props) => {
     let history = useHistory()
     const [valueLogin, setValueLogin] = useState("")
     const [password, setPassword] = useState("")
-    // const [email, setEmail] = useState("")
-    // const [phone, setPhone] = useState("")
-    // const [username, setUserName] = useState("")
     const defaultValidInput = {
         isValidValueLogin: true,
         isValidPassword: true,
@@ -46,6 +44,18 @@ const Login = (props) => {
             toast.error(response.data.EM)
         }
     }
+    const handlePressEnter = (event) => {
+        if (event.charCode === 13 && event.code === 'Enter') {
+            handleLogin()
+        }
+    }
+    useEffect(() => {
+        let session = sessionStorage.getItem('account')
+        if (session) {
+            history.push('/')
+            window.location.reload()
+        }
+    }, [])
     return (
         <div className="login-container">
             <div className="container">
@@ -75,6 +85,7 @@ const Login = (props) => {
                             placeholder='Password'
                             value={password}
                             onChange={(event) => setPassword(event.target.value)}
+                            onKeyPress={(event) => handlePressEnter(event)}
                         />
                         <button className='btn btn-primary' onClick={() => handleLogin()}>Login</button>
                         <span className='text-center'>
