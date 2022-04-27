@@ -10,7 +10,11 @@ const loginUser = (valueLogin, password) => {
         valueLogin, password
     })
 }
+const fetchAllUser = () => {
+    return axios.get("http://localhost:8080/api/v1/users/read")
+}
 export {
     registerNewUser,
-    loginUser
+    loginUser,
+    fetchAllUser
 }
