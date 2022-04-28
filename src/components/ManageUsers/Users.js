@@ -6,6 +6,7 @@ import { fetchAllUser, deleteUser } from "../../services/userService"
 import ReactPaginate from 'react-paginate'
 import { toast } from "react-toastify"
 import ModalDelete from "./ModalDelete"
+import ModalUser from "./ModalUser"
 
 const Users = () => {
     const [listUsers, setListUsers] = useState([])
@@ -14,6 +15,7 @@ const Users = () => {
     const [totalPages, setTotalPages] = useState(0)
     const [isShowModalDelete, setIsShowModalDelete] = useState(false)
     const [dataModal, setDataModal] = useState({})
+    const [isShowModalUser, setIsShowModalUser] = useState(false)
     useEffect(() => {
         fetchUsers()
     }, [currentPage])
@@ -46,6 +48,9 @@ const Users = () => {
             toast.error(respone.data.EM)
         }
     }
+    const handleCreateNewUser = () => {
+        setIsShowModalUser(true)
+    }
     return (
         <>
             <div className="container">
@@ -56,7 +61,9 @@ const Users = () => {
                         </div>
                         <div className="action">
                             <button className="btn btn-success">Refresh</button>
-                            <button className="btn btn-primary">Add new user</button>
+                            <button className="btn btn-primary"
+                                onClick={() => handleCreateNewUser()}
+                            >Add new user</button>
                         </div>
                     </div>
                     <div className="user-body">
@@ -139,6 +146,9 @@ const Users = () => {
                 handleClose={handleClose}
                 confirmDeleteUser={confirmDeleteUser}
                 dataModal={dataModal}
+            />
+            <ModalUser
+                show={isShowModalUser}
             />
         </>
     )
