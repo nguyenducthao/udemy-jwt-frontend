@@ -48,8 +48,8 @@ const Users = () => {
             toast.error(respone.data.EM)
         }
     }
-    const handleCreateNewUser = () => {
-        setIsShowModalUser(true)
+    const onHideModalUser = () => {
+        setIsShowModalUser(false)
     }
     return (
         <>
@@ -62,7 +62,7 @@ const Users = () => {
                         <div className="action">
                             <button className="btn btn-success">Refresh</button>
                             <button className="btn btn-primary"
-                                onClick={() => handleCreateNewUser()}
+                                onClick={() => setIsShowModalUser(true)}
                             >Add new user</button>
                         </div>
                     </div>
@@ -149,6 +149,8 @@ const Users = () => {
             />
             <ModalUser
                 show={isShowModalUser}
+                onHide={onHideModalUser}
+                fetchUsers={fetchUsers}
             />
         </>
     )
