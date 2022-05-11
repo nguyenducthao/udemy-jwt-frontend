@@ -1,7 +1,7 @@
 import { Button } from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 import { useState, useEffect } from 'react'
-import { fetchGroup, createNewUser } from '../../services/userService'
+import { fetchGroup, createNewUser, updateCurrentUser } from '../../services/userService'
 import { toast } from 'react-toastify'
 import _ from 'lodash'
 
@@ -49,7 +49,7 @@ const ModalUser = (props) => {
             setUserGroups(response.data.DT)
             if (response.data.DT && response.data.DT.length > 0) {
                 let groups = response.data.DT
-                setUserData({ ...userData, groupId: groups[0].id })
+                setUserData({ ...userData, groupId: groups[0].id, sex: 'Male' })
             }
         } else {
             toast.error(response.data.EM)
@@ -61,6 +61,9 @@ const ModalUser = (props) => {
         setUserData(_userData)
     }
     const checkValidateInputs = () => {
+        if (action === 'UPDATE') {
+            return true
+        }
         setValidInputs(validInputsDefault)
         let arr = ['email', 'phone', 'password', 'groupId']
         let check = true
@@ -79,7 +82,9 @@ const ModalUser = (props) => {
     const handleConfirmUser = async () => {
         let check = checkValidateInputs()
         if (check) {
-            let response = await createNewUser(userData)
+            let response = action === 'CREATE' ?
+                await createNewUser(userData)
+                : await updateCurrentUser(userData)
             if (response && response.data.EC === 0) {
                 toast.success(response.data.EM)
                 props.onHide()
@@ -176,7 +181,7 @@ const ModalUser = (props) => {
                             <select
                                 className={validInputs.groupId ? 'form-select' : 'form-select is-invalid'}
                                 // className='form-select'
-                                onChange={(event) => handleOnChangeInput(event.target.value, 'group')}
+                                onChange={(event) => handleOnChangeInput(event.target.value, 'groupId')}
                                 value={userData.groupId}
                             >
                                 {userGroups && userGroups.length > 0 &&
