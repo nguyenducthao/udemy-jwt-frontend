@@ -117,3 +117,5 @@ cách fix lỗi CORS cho project 01_jwtBackend:
 
     mở file index.js thêm vào dòng code sau để sử dụng font-awesome:
         import 'font-awesome/css/font-awesome.min.css'
+
+    tạo file src/setup/axios.js để cấu hình lại axios theo ý muốn

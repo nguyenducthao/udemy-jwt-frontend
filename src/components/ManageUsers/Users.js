@@ -23,9 +23,9 @@ const Users = () => {
     }, [currentPage])
     const fetchUsers = async () => {
         let response = await fetchAllUser(currentPage, currentLimit)
-        if (response && response.data && response.data.EC === 0) {
-            setTotalPages(response.data.DT.totalPages)
-            setListUsers(response.data.DT.users)
+        if (response && response.EC === 0) {
+            setTotalPages(response.DT.totalPages)
+            setListUsers(response.DT.users)
         }
     }
     const handlePageClick = async (event) => {
@@ -42,12 +42,12 @@ const Users = () => {
     }
     const confirmDeleteUser = async () => {
         let respone = await deleteUser(dataModal)
-        if (respone && respone.data.EC === 0) {
-            toast.success(respone.data.EM)
+        if (respone && respone.EC === 0) {
+            toast.success(respone.EM)
             await fetchUsers()
             setIsShowModalDelete(false)
         } else {
-            toast.error(respone.data.EM)
+            toast.error(respone.EM)
         }
     }
     const onHideModalUser = async () => {
