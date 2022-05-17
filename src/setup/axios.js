@@ -31,7 +31,6 @@ instance.interceptors.response.use(function (response) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     const status = error && error.response && error.response.status || 500
-    console.log(status)
     switch (status) {
         // authentication (token related issues)
         case 401: {
