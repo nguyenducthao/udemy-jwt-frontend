@@ -11,25 +11,39 @@ import {
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Users from './components/ManageUsers/Users';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import _ from 'lodash';
 import AppRoutes from './routes/AppRoutes';
+import { Rings } from 'react-loader-spinner'
+import { UserContext } from './context/UserContext';
 
 function App() {
-
+  const { user } = useContext(UserContext)
   return (
     <>
       <Router>
-        <div className='app-header'>
-          <Nav />
-        </div>
-        <div className='app-container'>
-          <AppRoutes />
-          {/* {
+        {user && user.isLoading ?
+          <div className='loading-container'>
+            <Rings
+              height="100"
+              width="100"
+              color='#1877f2'
+              ariaLabel='loading'
+            />
+            <div>Loading data...</div>
+          </div>
+          :
+          <>
+            <div className='app-header'>
+              <Nav />
+            </div>
+            <div className='app-container'>
+              <AppRoutes />
+              {/* {
             account && !_.isEmpty(account) && account.isAuthenticated &&
             <Nav />
           } */}
-          {/* <Switch>
+              {/* <Switch>
             <Route path="/news">
               news
             </Route>
@@ -55,7 +69,9 @@ function App() {
               404 not found
             </Route>
           </Switch> */}
-        </div>
+            </div>
+          </>
+        }
         <ToastContainer
           position="top-right"
           autoClose={5000}
