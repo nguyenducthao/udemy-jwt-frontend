@@ -1,6 +1,5 @@
 import { useHistory } from 'react-router-dom'
-import { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useContext } from 'react'
 import './Login.scss'
 import { toast } from 'react-toastify'
 import { loginUser } from '../../services/userService'
@@ -42,10 +41,8 @@ const Login = (props) => {
                 token: token,
                 account: { groupWithRoles, email, username }
             }
-            sessionStorage.setItem('account', JSON.stringify(data))
             loginContext(data)
             history.push('/users')
-            // window.location.reload()
         }
         if (response && +response.EC !== 0) {
             toast.error(response.EM)
@@ -56,13 +53,7 @@ const Login = (props) => {
             handleLogin()
         }
     }
-    useEffect(() => {
-        let session = sessionStorage.getItem('account')
-        if (session) {
-            history.push('/')
-            window.location.reload()
-        }
-    }, [])
+
     return (
         <div className="login-container">
             <div className="container">
