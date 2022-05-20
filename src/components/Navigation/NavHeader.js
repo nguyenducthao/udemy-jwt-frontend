@@ -1,13 +1,27 @@
 import './Nav.scss'
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useHistory } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import logo from '../../logo.svg'
+import { logoutUser } from '../../services/userService';
+import { toast } from 'react-toastify';
 
 const NavHeader = () => {
-    const { user } = useContext(UserContext)
+    const { user, logoutContext } = useContext(UserContext)
     const location = useLocation()
+    const history = useHistory()
+    const handleLogOut = async () => {
+        let data = await logoutUser() //clear cookie 
+        if (data && +data.EC === 0) {
+            toast.success('Logout succeeds...')
+            localStorage.removeItem('jwt') //clear local storage
+            logoutContext() // clear user in context
+            history.push('/login')
+        } else {
+            toast.error(data.EM)
+        }
+    }
     if (user && user.isAuthenticated || location.pathname === '/') {
         return (
             <>
@@ -39,14 +53,25 @@ const NavHeader = () => {
                                     <NavLink to="/about" className='nav-link'>About</NavLink>
                                 </Nav>
                                 <Nav>
-                                    <Nav.Item className='nav-link'>
-                                        Welcome thaond
-                                    </Nav.Item>
-                                    <NavDropdown title="Settings" id="basic-nav-dropdown">
-                                        <NavDropdown.Item href="#action/3.1">Change Password</NavDropdown.Item>
-                                        <NavDropdown.Divider />
-                                        <NavDropdown.Item href="#action/3.4">Log out</NavDropdown.Item>
-                                    </NavDropdown>
+                                    {user && user.isAuthenticated
+                                        ?
+                                        <>
+                                            <Nav.Item className='nav-link'>
+                                                Welcome {user.account.username}!
+                                            </Nav.Item>
+                                            <NavDropdown title="Settings" id="basic-nav-dropdown">
+                                                <NavDropdown.Item>Change Password</NavDropdown.Item>
+                                                <NavDropdown.Divider />
+                                                <NavDropdown.Item>
+                                                    <span onClick={() => handleLogOut()}>Log out</span>
+                                                </NavDropdown.Item>
+                                            </NavDropdown>
+                                        </>
+                                        :
+                                        <Link className='nav-link' to='/login'>
+                                            Login
+                                        </Link>
+                                    }
                                 </Nav>
                             </Navbar.Collapse>
                         </Container>
