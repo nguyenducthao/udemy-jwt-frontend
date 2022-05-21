@@ -1,10 +1,8 @@
-import {
-    Switch,
-    Route
-} from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Login from "../components/Login/Login";
 import Users from "../components/ManageUsers/Users";
 import Register from "../components/Register/Register";
+import Role from "../components/Role/Role";
 import PrivateRoutes from "./PrivateRoutes";
 const AppRoutes = (props) => {
     return (
@@ -16,10 +14,8 @@ const AppRoutes = (props) => {
                 <Route path="/users">
                     <Users />
                 </Route> */}
-                <PrivateRoutes
-                    path='/users'
-                    component={Users}
-                />
+                <PrivateRoutes path='/users' component={Users} />
+                <PrivateRoutes path='/roles' component={Role} />
                 <Route path="/login">
                     <Login />
                 </Route>
