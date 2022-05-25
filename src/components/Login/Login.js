@@ -1,12 +1,12 @@
 import { useHistory } from 'react-router-dom'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import './Login.scss'
 import { toast } from 'react-toastify'
 import { loginUser } from '../../services/userService'
 import { UserContext } from '../../context/UserContext'
 
 const Login = (props) => {
-    const { loginContext } = useContext(UserContext)
+    const { user, loginContext } = useContext(UserContext)
     let history = useHistory()
     const [valueLogin, setValueLogin] = useState("")
     const [password, setPassword] = useState("")
@@ -54,7 +54,11 @@ const Login = (props) => {
             handleLogin()
         }
     }
-
+    useEffect(() => {
+        if (user && user.isAuthenticated) {
+            history.push('/')
+        }
+    }, [user])
     return (
         <div className="login-container">
             <div className="container">

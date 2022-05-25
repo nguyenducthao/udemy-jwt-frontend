@@ -5,6 +5,7 @@ import Register from "../components/Register/Register";
 import Role from "../components/Role/Role";
 import GroupRole from '../components/GroupRole/GroupRole'
 import PrivateRoutes from "./PrivateRoutes";
+import About from "../components/About/About";
 
 const AppRoutes = (props) => {
     return (
@@ -24,6 +25,9 @@ const AppRoutes = (props) => {
                 </Route>
                 <Route path="/register">
                     <Register />
+                </Route>
+                <Route path="/about">
+                    <About />
                 </Route>
                 <Route path="/" exact>
                     home

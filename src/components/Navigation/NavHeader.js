@@ -22,7 +22,7 @@ const NavHeader = () => {
             toast.error(data.EM)
         }
     }
-    if (user && user.isAuthenticated || location.pathname === '/') {
+    if (user && user.isAuthenticated || location.pathname === '/' || location.pathname === '/about') {
         return (
             <>
                 {/* <div className="topnav">
@@ -34,7 +34,7 @@ const NavHeader = () => {
                 <div className='nav-header'>
                     <Navbar bg="header" expand="lg">
                         <Container>
-                            <Navbar.Brand href="#home">
+                            <Navbar.Brand>
                                 <img
                                     src={logo}
                                     width="30"
