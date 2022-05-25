@@ -25,7 +25,12 @@ const Users = () => {
         let response = await fetchAllUser(currentPage, currentLimit)
         if (response && response.EC === 0) {
             setTotalPages(response.DT.totalPages)
-            setListUsers(response.DT.users)
+            if (response.DT.totalPages > 0 && response.DT.users.length === 0) {
+                setCurrentPage(response.DT.totalPages)
+                await fetchAllUser(response.DT.totalPages, currentLimit)
+            } if (response.DT.totalPages > 0 && response.DT.users.length > 0) {
+                setListUsers(response.DT.users)
+            }
         }
     }
     const handlePageClick = async (event) => {
@@ -169,6 +174,7 @@ const Users = () => {
                                 containerClassName="pagination"
                                 activeClassName="active"
                                 renderOnZeroPageCount={null}
+                                forcePage={+currentPage - 1}
                             />
                         </div>
                     }
